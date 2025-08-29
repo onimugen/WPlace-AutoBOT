@@ -1197,6 +1197,9 @@ function applyTheme() {
     paintingSpeed: CONFIG.PAINTING_SPEED.DEFAULT, // pixels batch size
     batchMode: CONFIG.BATCH_MODE, // "normal" or "random"
     randomBatchMin: CONFIG.RANDOM_BATCH_RANGE.MIN, // Random range minimum
+    enableSmartSkipping: true, // Skip pixels that are "close enough" to target
+    smartSkippingThreshold: 15, // RGB distance threshold for smart skipping
+    debugPixelSkipping: false, // Enable detailed logging for pixel skipping
     randomBatchMax: CONFIG.RANDOM_BATCH_RANGE.MAX, // Random range maximum
     cooldownChargeThreshold: CONFIG.COOLDOWN_CHARGE_THRESHOLD,
     tokenSource: CONFIG.TOKEN_SOURCE, // "generator" or "manual"
@@ -2411,21 +2414,61 @@ function applyTheme() {
       if (hours > 0 || days > 0) result += `${hours}h `
       if (minutes > 0 || hours > 0 || days > 0) result += `${minutes}m `
       result += `${seconds}s`
-
       return result
     },
 
     calculateEstimatedTime: (remainingPixels, charges, cooldown) => {
-      if (remainingPixels <= 0) return 0;
+  if (remainingPixels <= 0) return 0;
 
-      const paintingSpeedDelay = state.paintingSpeed > 0 ? (1000 / state.paintingSpeed) : 1000;
-      const timeFromSpeed = remainingPixels * paintingSpeedDelay;
-
-      const cyclesNeeded = Math.ceil(remainingPixels / Math.max(charges, 1));
-      const timeFromCharges = cyclesNeeded * cooldown;
-
-      return timeFromSpeed + timeFromCharges; // combine instead of taking max
-    },
+  // Account for batch processing - pixels painted per charge cycle
+  const batchSize = state.paintingSpeedEnabled ? 
+    (state.batchMode === "random" ? 
+      Math.floor((state.randomBatchMin + state.randomBatchMax) / 2) : 
+      Math.min(state.paintingSpeed, CONFIG.PAINTING_SPEED.MAX)
+    ) : 1;
+  
+  const pixelsPerCharge = Math.min(batchSize, remainingPixels);
+  const chargesNeeded = Math.ceil(remainingPixels / pixelsPerCharge);
+  
+  // Calculate time based on charge availability and regeneration
+  const currentCharges = Math.max(charges, 0);
+  let totalTime = 0;
+  
+  if (chargesNeeded <= currentCharges) {
+    // Can complete with current charges
+    const paintingDelay = state.paintingSpeedEnabled ? 
+      (pixelsPerCharge * (1000 / Math.max(state.paintingSpeed, 1))) : 
+      (pixelsPerCharge * 1000);
+    totalTime = chargesNeeded * (paintingDelay + 500); // 500ms between batches
+  } else {
+    // Need to wait for charge regeneration
+    const immediateCharges = currentCharges;
+    const waitingCharges = chargesNeeded - immediateCharges;
+    
+    // Time for immediate painting
+    if (immediateCharges > 0) {
+      const immediatePaintTime = immediateCharges * 1500; // ~1.5s per charge including delays
+      totalTime += immediatePaintTime;
+    }
+    
+    // Time waiting for charge regeneration (cooldown is per charge, not per cycle)
+    const chargeRegenRate = cooldown / state.maxCharges; // ms per single charge
+    totalTime += waitingCharges * chargeRegenRate;
+    
+    // Time for remaining painting
+    const remainingPaintTime = waitingCharges * 1500;
+    totalTime += remainingPaintTime;
+  }
+  
+  // Add overhead for CAPTCHA refreshes (estimated every 100 pixels)
+  const captchaOverhead = Math.floor(remainingPixels / 100) * 3000; // 3s per refresh
+  totalTime += captchaOverhead;
+  
+  // Add 10% buffer for retries and network delays
+  totalTime *= 1.1;
+  
+  return Math.round(totalTime);
+}    ,
 
     // --- Painted pixel tracking helpers ---
     initializePaintedMap: (width, height) => {
@@ -5947,23 +5990,56 @@ function applyTheme() {
           }
 
           
+          // Enhanced pixel skipping logic - check if pixel already matches target
           try {
             const tileRegionX = pixelBatch ? (pixelBatch.regionX) : (regionX + adderX);
             const tileRegionY = pixelBatch ? (pixelBatch.regionY) : (regionY + adderY);
             const tileKeyParts = [(regionX + adderX), (regionY + adderY)];
             const existingColorRGBA = await overlayManager.getTilePixelColor(tileKeyParts[0], tileKeyParts[1], pixelX, pixelY).catch(() => null);
+            
             if (existingColorRGBA && Array.isArray(existingColorRGBA)) {
-              const [er, eg, eb] = existingColorRGBA;
+              const [er, eg, eb, ea] = existingColorRGBA;
+              
+              // Get target color RGB from our image
+              const targetIdx = (y * width + x) * 4;
+              const targetR = pixels[targetIdx];
+              const targetG = pixels[targetIdx + 1];
+              const targetB = pixels[targetIdx + 2];
+              
+              // Check for exact color match first (most efficient)
+              if (er === targetR && eg === targetG && eb === targetB) {
+                skippedPixels.alreadyPainted++;
+                if (state.debugPixelSkipping) console.log(`✅ Exact color match at (${pixelX}, ${pixelY}) - skipped`);
+                continue;
+              }
+              
+              // Check if existing color maps to same palette color as target
               const existingColorId = findClosestColor([er, eg, eb], state.availableColors);
-              // console.log(`pixel at (${pixelX}, ${pixelY}) has color ${existingColorId} it should be ${colorId}`);
               if (existingColorId === colorId) {
                 skippedPixels.alreadyPainted++;
-                console.log(`Skipped already painted pixel at (${pixelX}, ${pixelY})`);
-                continue; // Skip
+                if (state.debugPixelSkipping) console.log(`🎯 Palette match at (${pixelX}, ${pixelY}) - existing: ${existingColorId}, target: ${colorId} - skipped`);
+                continue;
+              }
+              
+              // Advanced: Check if colors are "close enough" to avoid unnecessary repainting
+              if (state.enableSmartSkipping) {
+                const colorDistance = Math.sqrt(
+                  Math.pow(er - targetR, 2) + 
+                  Math.pow(eg - targetG, 2) + 
+                  Math.pow(eb - targetB, 2)
+                );
+                
+                // Skip if colors are very similar (threshold configurable)
+                const skipThreshold = state.smartSkippingThreshold || 15; // RGB distance
+                if (colorDistance <= skipThreshold) {
+                  skippedPixels.alreadyPainted++;
+                  if (state.debugPixelSkipping) console.log(`🔍 Smart skip at (${pixelX}, ${pixelY}) - distance: ${Math.round(colorDistance)} <= ${skipThreshold}`);
+                  continue;
+                }
               }
             }
           } catch (e) {
-            /* ignore */
+            if (state.debugPixelSkipping) console.warn(`Pixel skip check failed at (${pixelX}, ${pixelY}):`, e);
           }
 
           pixelBatch.pixels.push({
