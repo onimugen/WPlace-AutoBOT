@@ -1,12 +1,28 @@
-<p align="center">
-  <img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/92c38d55-37ef-4e88-bf24-9dba693fa0ab" />
-</p>
+```
+    ╔══════════════════════════════════════════════════════════════╗
+    ║                                                              ║
+    ║   ██████╗ ███╗   ██╗██╗███╗   ███╗██╗   ██╗ ██████╗ ███████╗ ║
+    ║  ██╔═══██╗████╗  ██║██║████╗ ████║██║   ██║██╔════╝ ██╔════╝ ║
+    ║  ██║   ██║██╔██╗ ██║██║██╔████╔██║██║   ██║██║  ███╗█████╗   ║
+    ║  ██║   ██║██║╚██╗██║██║██║╚██╔╝██║██║   ██║██║   ██║██╔══╝   ║
+    ║  ╚██████╔╝██║ ╚████║██║██║ ╚═╝ ██║╚██████╔╝╚██████╔╝███████╗ ║
+    ║   ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝ ║
+    ║                                                              ║
+    ║              [█████████████████████████████████]             ║
+    ║              [█] WPlace AutoBOT Enhanced v2.0 [█]            ║
+    ║              [█████████████████████████████████]             ║
+    ║                                                              ║
+    ║  ┌─────────────────────────────────────────────────────────┐ ║
+    ║  │ > Enhanced by: Oni Chan (@onimugen)                    │ ║
+    ║  │ > Email: arias1555@gmail.com                           │ ║
+    ║  │ > Fork from: https://github.com/DarkModde/WPlace-AutoBOT│ ║
+    ║  │ > Advanced pixel skipping & time estimation            │ ║
+    ║  └─────────────────────────────────────────────────────────┘ ║
+    ║                                                              ║
+    ╚══════════════════════════════════════════════════════════════╝
+```
 
-<p align="center"><strong>WPlace AutoBOT - Enhanced Edition</strong></p>
-<p align="center">
-This project was fork from https://github.com/DarkModde/WPlace-AutoBOT<br>
-<strong>🚀 Enhanced by @onimugen with advanced pixel skipping and time estimation</strong>
-</p>
+<p align="center"><strong>WPlace AutoBOT - Enhanced Edition by @onimugen</strong></p>
 <p align="center">
   Consider checking out our discord: https://discord.gg/knkNRYyQcm
 </p>
@@ -32,11 +48,12 @@ This project was fork from https://github.com/DarkModde/WPlace-AutoBOT<br>
 
 ---
 
-<p align="center"><strong>🚀┃How to use the scripts:</strong></p>
+<p align="center"><strong>### 🚀┃How to use the Enhanced Scripts:</strong></p>
 
 <p align="center">
-  It’s super easy: copy one of the codes below, paste it into your browser’s bookmarks bar,<br>
-  and run it while you're on wplace.live.
+  It's super easy: copy one of the codes below, paste it into your browser's bookmarks bar,<br>
+  and run it while you're on <a href="https://wplace.live" target="_blank">wplace.live</a>.<br>
+  <strong>📍 Use the Enhanced URLs below for improved performance!</strong>
 </p>
 
 <br>
@@ -130,7 +147,16 @@ javascript:fetch("https://raw.githubusercontent.com/onimugen/WPlace-AutoBOT/main
 
 ---
 
-- Contributors:  
+### 👨‍💻┃Enhanced by
+
+**Oni Chan (@onimugen)**
+- 📧 Email: arias1555@gmail.com
+- 🔗 GitHub: https://github.com/onimugen
+- 🚀 Enhancements: Advanced pixel skipping, improved time estimation, performance optimizations
+
+---
+
+- Original Contributors:  
   <img src="https://contrib.rocks/image?repo=Wplace-AutoBot/WPlace-AutoBOT" alt="Contributors" />
 
 
