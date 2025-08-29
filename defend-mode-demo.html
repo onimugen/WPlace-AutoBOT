@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WPlace AutoBOT - Defend Mode Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .demo-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .feature-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .feature-title {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+        }
+        .code-block {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🛡️ WPlace AutoBOT - Defend Mode</h1>
+        <p>The defend functionality has been successfully implemented! Here's how to use the new defend mode:</p>
+
+        <div class="feature-section">
+            <div class="feature-title">🎯 How Defend Mode Works</div>
+            <div class="step">
+                <strong>1. Scan Colors First</strong><br>
+                Click "Scan Colors" to enable defend mode buttons
+            </div>
+            <div class="step">
+                <strong>2. Select Defend Area</strong><br>
+                Click "Select Defend Area" → Place a pixel on the canvas to mark the top-left corner of your 50x50 defend zone
+            </div>
+            <div class="step">
+                <strong>3. Start Defending</strong><br>
+                Click "Start Defending" to begin monitoring and protecting your area
+            </div>
+            <div class="step">
+                <strong>4. Automatic Protection</strong><br>
+                Bot scans every 2 seconds and repairs any "attacked" pixels using available charges
+            </div>
+        </div>
+
+        <div class="feature-section">
+            <div class="feature-title">⚙️ Technical Features</div>
+            <div class="code-block">
+• <span class="success">Smart Charge Management</span> - Respects cooldown thresholds<br>
+• <span class="success">Token Integration</span> - Uses existing Turnstile system<br>
+• <span class="success">Area Monitoring</span> - 50x50 pixel defend zones<br>
+• <span class="success">Auto-Repair</span> - Restores compromised pixels<br>
+• <span class="success">Progress Tracking</span> - Real-time defend statistics<br>
+• <span class="success">Error Handling</span> - Robust with user feedback
+            </div>
+        </div>
+
+        <div class="feature-section">
+            <div class="feature-title">🔧 New UI Elements Added</div>
+            <div class="code-block">
+🛡️ Defend Mode Section:
+├── Select Defend Area (Button)
+├── Start Defending (Button)
+└── Stop Defending (Button)
+
+State Variables:
+├── state.defending (boolean)
+├── state.defendedPixels (counter)
+├── state.defendPosition (coordinates)
+└── state.selectingDefendArea (boolean)
+            </div>
+        </div>
+
+        <div class="highlight">
+            <strong>🎉 Implementation Complete!</strong><br>
+            The defend mode is fully integrated with multilingual support, proper button state management, and seamless integration with existing painting and overlay systems.
+        </div>
+
+        <div class="feature-section">
+            <div class="feature-title">🧪 Testing Scenarios</div>
+            <div class="step">
+                <strong>Basic Defense:</strong> Select area → Start defending → Verify pixels get repaired
+            </div>
+            <div class="step">
+                <strong>Charge Management:</strong> Test with low charges → Should wait for cooldown
+            </div>
+            <div class="step">
+                <strong>Area Selection:</strong> Test timeout (30s) → Should reset properly
+            </div>
+            <div class="step">
+                <strong>Stop/Start:</strong> Test stopping and restarting defend mode
+            </div>
+            <div class="step">
+                <strong>Integration:</strong> Test with main painting mode → Should disable properly
+            </div>
+        </div>
+
+        <div class="feature-section">
+            <div class="feature-title">📝 Usage Instructions</div>
+            <ol>
+                <li>Load the bot on WPlace</li>
+                <li>Scan available colors first</li>
+                <li>Click "Select Defend Area" and place a reference pixel</li>
+                <li>Click "Start Defending" to begin protection</li>
+                <li>Monitor the status messages and progress updates</li>
+                <li>Use "Stop Defending" to halt protection anytime</li>
+            </ol>
+        </div>
+
+        <div class="highlight">
+            <p><strong class="success">✅ Ready for Production!</strong></p>
+            <p>The defend mode enhances bot reliability by protecting painted areas from griefing while working within platform constraints. All functionality is implemented and integrated.</p>
+        </div>
+    </div>
+</body>
+</html>

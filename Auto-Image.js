@@ -354,6 +354,18 @@ function applyTheme() {
       captchaFailed: "❌ Turnstile token generation failed. Trying fallback method...",
       automation: "Automation",
       noChargesThreshold: "⌛ Waiting for charges to reach {threshold}. Currently {current}. Next in {time}...",
+      startDefending: "Start Defending",
+      stopDefending: "Stop Defending",
+      selectDefendArea: "Select Defend Area",
+      defendingProgress: "🛡️ Defending: {defended}/{total} pixels...",
+      defendingStarted: "🛡️ Defend mode started!",
+      defendingStopped: "⏹️ Defend mode stopped",
+      defendingComplete: "✅ Defend area secured! {count} pixels defended.",
+      defendingError: "❌ Error during defend mode",
+      selectDefendAreaAlert: "Paint a pixel to mark the top-left corner of the defend area!",
+      waitingDefendArea: "👆 Waiting for you to paint the defend area reference pixel...",
+      defendAreaSet: "✅ Defend area successfully set!",
+      defendAreaTimeout: "❌ Defend area selection timeout",
     },
     ru: {
       title: "WPlace Авто-Изображение",
@@ -1174,10 +1186,12 @@ function applyTheme() {
   // GLOBAL STATE
   const state = {
     running: false,
+    defending: false, // New defend mode state
     imageLoaded: false,
     processing: false,
     totalPixels: 0,
     paintedPixels: 0,
+    defendedPixels: 0, // Track defended pixels
     availableColors: [],
     activeColorPalette: [], // User-selected colors for conversion
     paintWhitePixels: true, // Default to ON
@@ -1185,10 +1199,13 @@ function applyTheme() {
     maxCharges: 1, // Default max charges
     cooldown: CONFIG.COOLDOWN_DEFAULT,
     imageData: null,
+    defendData: null, // Store defend area data
     stopFlag: false,
     colorsChecked: false,
     startPosition: null,
+    defendPosition: null, // Defend area start position
     selectingPosition: false,
+    selectingDefendArea: false, // New defend area selection state
     region: null,
     minimized: false,
     lastPosition: { x: 0, y: 0 },
@@ -3498,6 +3515,29 @@ function applyTheme() {
           </div>
         </div>
 
+        <!-- Defend Section -->
+        <div class="wplace-section">
+          <div class="wplace-section-title">🛡️ Defend Mode</div>
+          <div class="wplace-controls">
+            <div class="wplace-row single">
+              <button id="selectDefendBtn" class="wplace-btn wplace-btn-select" disabled>
+                <i class="fas fa-shield-alt"></i>
+                <span>${Utils.t("selectDefendArea")}</span>
+              </button>
+            </div>
+            <div class="wplace-row">
+              <button id="startDefendBtn" class="wplace-btn wplace-btn-start" disabled>
+                <i class="fas fa-shield-alt"></i>
+                <span>${Utils.t("startDefending")}</span>
+              </button>
+              <button id="stopDefendBtn" class="wplace-btn wplace-btn-stop" disabled>
+                <i class="fas fa-stop"></i>
+                <span>${Utils.t("stopDefending")}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Cooldown Section -->
         <div class="wplace-section">
             <div class="wplace-section-title">⏱️ ${Utils.t("cooldownSettings")}</div>
@@ -4623,6 +4663,7 @@ function applyTheme() {
             } else {
               uploadBtn.disabled = false;
               selectPosBtn.disabled = false;
+              selectDefendBtn.disabled = false;
             }
 
             if (state.imageLoaded && state.startPosition && state.region && state.colorsChecked) {
@@ -4672,6 +4713,7 @@ function applyTheme() {
             if (state.colorsChecked) {
               uploadBtn.disabled = false
               selectPosBtn.disabled = false
+              selectDefendBtn.disabled = false
               resizeBtn.disabled = false
             } else {
               uploadBtn.disabled = false;
@@ -5615,6 +5657,7 @@ _resizeDialogCleanup = () => {
           updateUI("colorsFound", "success", { count: availableColors.length });
           updateStats();
           selectPosBtn.disabled = false;
+          selectDefendBtn.disabled = false;
           // Only enable resize button if image is also loaded
           if (state.imageLoaded) {
             resizeBtn.disabled = false;
@@ -5793,6 +5836,9 @@ _resizeDialogCleanup = () => {
       stopBtn.disabled = false
       uploadBtn.disabled = true
       selectPosBtn.disabled = true
+      selectDefendBtn.disabled = true
+      startDefendBtn.disabled = true
+      stopDefendBtn.disabled = true
       resizeBtn.disabled = true
       saveBtn.disabled = true
       toggleOverlayBtn.disabled = true;
@@ -5814,11 +5860,207 @@ _resizeDialogCleanup = () => {
           startBtn.disabled = true
           uploadBtn.disabled = false
           selectPosBtn.disabled = false
+          selectDefendBtn.disabled = false
           resizeBtn.disabled = false
         } else {
           startBtn.disabled = false
+          selectDefendBtn.disabled = false
         }
         toggleOverlayBtn.disabled = false;
+      }
+    }
+
+    // Defend area selection function
+    async function selectDefendArea() {
+      if (!state.colorsChecked) {
+        Utils.showAlert("Please scan colors first!", "error")
+        return
+      }
+
+      state.selectingDefendArea = true
+      selectDefendBtn.disabled = true
+      
+      Utils.showAlert(Utils.t("selectDefendAreaAlert"), "info")
+      updateUI("waitingDefendArea", "info")
+
+      const timeout = setTimeout(() => {
+        if (state.selectingDefendArea) {
+          state.selectingDefendArea = false
+          selectDefendBtn.disabled = false
+          updateUI("defendAreaTimeout", "error")
+          Utils.showAlert(Utils.t("defendAreaTimeout"), "error")
+        }
+      }, 30000) // 30 second timeout
+
+      // Listen for pixel placement to capture defend area position
+      const originalFetch = window.fetch
+      window.fetch = async function(...args) {
+        const result = await originalFetch.apply(this, args)
+        
+        if (state.selectingDefendArea && args[0] && args[0].includes('/api/pixel')) {
+          try {
+            const requestData = JSON.parse(args[1]?.body || '{}')
+            if (requestData.x !== undefined && requestData.y !== undefined) {
+              clearTimeout(timeout)
+              state.selectingDefendArea = false
+              
+              // Calculate region from pixel coordinates
+              const regionX = Math.floor(requestData.x / 1000)
+              const regionY = Math.floor(requestData.y / 1000)
+              const pixelX = requestData.x % 1000
+              const pixelY = requestData.y % 1000
+              
+              state.defendPosition = { x: pixelX, y: pixelY }
+              state.region = { x: regionX, y: regionY }
+              
+              selectDefendBtn.disabled = false
+              startDefendBtn.disabled = false
+              
+              updateUI("defendAreaSet", "success")
+              Utils.showAlert(Utils.t("defendAreaSet"), "success")
+              
+              // Restore original fetch
+              window.fetch = originalFetch
+            }
+          } catch (e) {
+            console.error("Error parsing defend area selection:", e)
+          }
+        }
+        
+        return result
+      }
+    }
+
+    // Start defending function
+    async function startDefending() {
+      if (!state.defendPosition || !state.region) {
+        Utils.showAlert("Please select defend area first!", "error")
+        return false
+      }
+
+      await ensureToken()
+      if (!turnstileToken) return false
+
+      state.defending = true
+      state.stopFlag = false
+      startDefendBtn.disabled = true
+      stopDefendBtn.disabled = false
+      selectDefendBtn.disabled = true
+
+      updateUI("defendingStarted", "success")
+      Utils.showAlert(Utils.t("defendingStarted"), "success")
+
+      try {
+        await processDefendArea()
+        return true
+      } catch (error) {
+        console.error("Defend error:", error)
+        updateUI("defendingError", "error")
+        Utils.showAlert(Utils.t("defendingError"), "error")
+        return false
+      } finally {
+        state.defending = false
+        stopDefendBtn.disabled = true
+        selectDefendBtn.disabled = false
+        
+        if (!state.stopFlag) {
+          startDefendBtn.disabled = false
+        }
+      }
+    }
+
+    // Process defend area - monitors and repairs pixels
+    async function processDefendArea() {
+      const defendWidth = 50  // Default defend area size
+      const defendHeight = 50
+      let defendedCount = 0
+      
+      while (state.defending && !state.stopFlag) {
+        try {
+          // Check if we have enough charges
+          const { charges } = await WPlaceService.getCharges()
+          state.currentCharges = Math.floor(charges)
+          
+          if (state.currentCharges < state.cooldownChargeThreshold) {
+            updateUI("noChargesThreshold", "warning", {
+              threshold: state.cooldownChargeThreshold,
+              current: state.currentCharges,
+              time: Utils.formatTime(state.cooldown)
+            })
+            await new Promise(resolve => setTimeout(resolve, 5000))
+            continue
+          }
+
+          // Scan defend area for changes
+          const pixelsToDefend = []
+          
+          for (let dy = 0; dy < defendHeight && state.defending; dy++) {
+            for (let dx = 0; dx < defendWidth && state.defending; dx++) {
+              const pixelX = state.defendPosition.x + dx
+              const pixelY = state.defendPosition.y + dy
+              
+              // Get current pixel color from canvas
+              try {
+                const tileRegionX = state.region.x
+                const tileRegionY = state.region.y
+                const existingColorRGBA = await overlayManager.getTilePixelColor(tileRegionX, tileRegionY, pixelX, pixelY).catch(() => null)
+                
+                if (existingColorRGBA && Array.isArray(existingColorRGBA)) {
+                  const [r, g, b] = existingColorRGBA
+                  
+                  // Check if pixel needs defending (you can customize this logic)
+                  // For now, we'll defend against any non-white pixels in the area
+                  if (r !== 255 || g !== 255 || b !== 255) {
+                    // This pixel has been "attacked" - add to defend list
+                    pixelsToDefend.push({
+                      x: pixelX + (tileRegionX * 1000),
+                      y: pixelY + (tileRegionY * 1000),
+                      color: 0 // White color ID - customize as needed
+                    })
+                  }
+                }
+              } catch (e) {
+                console.warn(`Failed to check pixel at (${pixelX}, ${pixelY}):`, e)
+              }
+            }
+          }
+
+          // Defend pixels that need repair
+          if (pixelsToDefend.length > 0) {
+            console.log(`🛡️ Defending ${pixelsToDefend.length} pixels`)
+            
+            for (const pixel of pixelsToDefend) {
+              if (!state.defending || state.stopFlag) break
+              
+              try {
+                await WPlaceService.placePixel(pixel.x, pixel.y, pixel.color, turnstileToken)
+                defendedCount++
+                
+                updateUI("defendingProgress", "info", {
+                  defended: defendedCount,
+                  total: defendWidth * defendHeight
+                })
+                
+                // Small delay between pixels
+                await new Promise(resolve => setTimeout(resolve, 100))
+              } catch (error) {
+                console.error(`Failed to defend pixel at (${pixel.x}, ${pixel.y}):`, error)
+              }
+            }
+          }
+
+          // Wait before next scan
+          await new Promise(resolve => setTimeout(resolve, 2000))
+          
+        } catch (error) {
+          console.error("Defend loop error:", error)
+          await new Promise(resolve => setTimeout(resolve, 5000))
+        }
+      }
+
+      if (defendedCount > 0) {
+        updateUI("defendingComplete", "success", { count: defendedCount })
+        Utils.showAlert(Utils.t("defendingComplete", { count: defendedCount }), "success")
       }
     }
 
@@ -5830,6 +6072,7 @@ _resizeDialogCleanup = () => {
       stopBtn.addEventListener("click", () => {
         state.stopFlag = true
         state.running = false
+        state.defending = false
         stopBtn.disabled = true
         updateUI("paintingStopped", "warning")
 
@@ -5837,6 +6080,29 @@ _resizeDialogCleanup = () => {
           Utils.saveProgress()
           Utils.showAlert(Utils.t("autoSaved"), "success")
         }
+      })
+    }
+
+    // Defend button event listeners
+    const selectDefendBtn = document.getElementById("selectDefendBtn")
+    const startDefendBtn = document.getElementById("startDefendBtn")
+    const stopDefendBtn = document.getElementById("stopDefendBtn")
+
+    if (selectDefendBtn) {
+      selectDefendBtn.addEventListener("click", selectDefendArea)
+    }
+
+    if (startDefendBtn) {
+      startDefendBtn.addEventListener("click", startDefending)
+    }
+
+    if (stopDefendBtn) {
+      stopDefendBtn.addEventListener("click", () => {
+        state.stopFlag = true
+        state.defending = false
+        stopDefendBtn.disabled = true
+        updateUI("defendingStopped", "warning")
+        Utils.showAlert(Utils.t("defendingStopped"), "warning")
       })
     }
 
