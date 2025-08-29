@@ -3534,6 +3534,12 @@ function applyTheme() {
                 <span>${Utils.t("loadFromFile")}</span>
               </button>
             </div>
+            <div class="wplace-row">
+              <button id="textToPixelBtn" class="wplace-btn wplace-btn-secondary">
+                <i class="fas fa-font"></i>
+                <span>Text to Pixels</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -4762,6 +4768,12 @@ function applyTheme() {
 
     updateDataButtons()
 
+    // Connect text-to-pixel button to dialog function
+    const textToPixelBtn = document.getElementById('textToPixelBtn');
+    if (textToPixelBtn) {
+      textToPixelBtn.addEventListener('click', showTextToPixelDialog);
+    }
+
     function showResizeDialog(processor) {
       let baseProcessor = processor;
       let width, height;
@@ -4877,6 +4889,8 @@ function applyTheme() {
           maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
           if (_maskImageData) maskCtx.putImageData(_maskImageData, 0, 0);
           updateZoomLayout();
+          // Just center the image without changing zoom
+          centerInView();
           return;
         }
   if (baseProcessor !== processor && (!baseProcessor.img || !baseProcessor.canvas)) {
@@ -4967,6 +4981,8 @@ function applyTheme() {
   maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
   if (_maskImageData) maskCtx.putImageData(_maskImageData, 0, 0);
   updateZoomLayout();
+        // Just center the image without changing zoom
+        centerInView();
       };
 
       const onWidthInput = () => {
@@ -4978,9 +4994,6 @@ function applyTheme() {
   const curH = parseInt(heightSlider.value, 10);
   state.resizeSettings = { baseWidth: width, baseHeight: height, width: curW, height: curH };
   saveBotSettings();
-        // Auto-fit after size changes
-        const fit = (typeof computeFitZoom === 'function') ? computeFitZoom() : 1;
-  if (!isNaN(fit) && isFinite(fit)) applyZoom(fit);
       };
 
       const onHeightInput = () => {
@@ -4992,9 +5005,6 @@ function applyTheme() {
   const curH = parseInt(heightSlider.value, 10);
   state.resizeSettings = { baseWidth: width, baseHeight: height, width: curW, height: curH };
   saveBotSettings();
-        // Auto-fit after size changes
-        const fit = (typeof computeFitZoom === 'function') ? computeFitZoom() : 1;
-  if (!isNaN(fit) && isFinite(fit)) applyZoom(fit);
       };
 
       paintWhiteToggle.onchange = (e) => {
@@ -5549,18 +5559,20 @@ function applyTheme() {
         } catch (e) { console.warn('Failed to download preview:', e); }
       };
 
-      cancelResize.onclick = closeResizeDialog;
+cancelResize.onclick = closeResizeDialog;
 
-      resizeOverlay.style.display = "block";
-      resizeContainer.style.display = "block";
+resizeOverlay.style.display = "block";
+resizeContainer.style.display = "block";
 
-      // Reinitialize color palette with current available colors
-      initializeColorPalette(resizeContainer);
+// Reinitialize color palette with current available colors
+initializeColorPalette(resizeContainer);
 
-      _updateResizePreview();
-      _resizeDialogCleanup = () => {
-        try { zoomSlider.replaceWith(zoomSlider.cloneNode(true)); } catch {}
-        try { if (zoomInBtn) zoomInBtn.replaceWith(zoomInBtn.cloneNode(true)); } catch {}
+_updateResizePreview();
+_resizeDialogCleanup = () => {
+  try { zoomSlider.replaceWith(zoomSlider.cloneNode(true)); } catch {}
+  try { if (zoomInBtn) zoomInBtn.replaceWith(zoomInBtn.cloneNode(true)); } catch {}
+  try { if (zoomOutBtn) zoomOutBtn.replaceWith(zoomOutBtn.cloneNode(true)); } catch {}
+};
         try { if (zoomOutBtn) zoomOutBtn.replaceWith(zoomOutBtn.cloneNode(true)); } catch {}
       };
       setTimeout(() => {
@@ -5859,7 +5871,6 @@ function applyTheme() {
     loadBotSettings();
     // Ensure notification poller reflects current settings
     NotificationManager.syncFromState();
-  }
 
   async function processImage() {
     const { width, height, pixels } = state.imageData
@@ -6490,6 +6501,186 @@ function applyTheme() {
     }
   }
 
+  function showTextToPixelDialog() {
+    const existingDialog = document.querySelector('.text-to-pixel-overlay');
+    if (existingDialog) existingDialog.remove();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'text-to-pixel-overlay resize-overlay';
+    overlay.innerHTML = `
+      <div class="text-to-pixel-container resize-container">
+        <div class="text-to-pixel-header">
+          <h3>Text to Pixels</h3>
+          <button id="closeTextToPixelBtn" class="close-btn">✕</button>
+        </div>
+        
+        <div class="text-to-pixel-content">
+          <div class="text-input-section">
+            <label for="textInput">Enter Text:</label>
+            <input type="text" id="textInput" placeholder="Type your text here..." maxlength="50" value="HOLA">
+            <div class="text-info">
+              <span>Supports: A-Z, 0-9, space, !, ?, ., ,</span>
+            </div>
+          </div>
+          
+          <div class="pixel-size-section">
+            <label for="pixelSizeSlider">Pixel Size: <span id="pixelSizeValue">3</span></label>
+            <input type="range" id="pixelSizeSlider" min="1" max="10" value="3" class="slider">
+            <div class="size-info">
+              <span>1 = 5x7 pixels per character</span>
+              <span>10 = 50x70 pixels per character</span>
+            </div>
+          </div>
+          
+          <div class="preview-section">
+            <label>Preview:</label>
+            <div id="textPreviewContainer" class="preview-container">
+              <canvas id="textPreviewCanvas"></canvas>
+            </div>
+            <div class="preview-info">
+              <span id="previewDimensions">Dimensions: 0x0</span>
+            </div>
+          </div>
+          
+          <div class="text-controls">
+            <button id="generateTextBtn" class="btn btn-primary">Generate Text Image</button>
+            <button id="cancelTextBtn" class="btn btn-secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const textInput = document.getElementById('textInput');
+    const pixelSizeSlider = document.getElementById('pixelSizeSlider');
+    const pixelSizeValue = document.getElementById('pixelSizeValue');
+    const previewCanvas = document.getElementById('textPreviewCanvas');
+    const previewDimensions = document.getElementById('previewDimensions');
+    const generateBtn = document.getElementById('generateTextBtn');
+    const cancelBtn = document.getElementById('cancelTextBtn');
+    const closeBtn = document.getElementById('closeTextToPixelBtn');
+
+    const updatePreview = () => {
+      const text = textInput.value || 'HOLA';
+      const pixelSize = parseInt(pixelSizeSlider.value);
+      
+      pixelSizeValue.textContent = pixelSize;
+      
+      const renderedCanvas = TextToPixelRenderer.renderText(text, pixelSize);
+      
+      previewCanvas.width = renderedCanvas.width;
+      previewCanvas.height = renderedCanvas.height;
+      const ctx = previewCanvas.getContext('2d');
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      ctx.drawImage(renderedCanvas, 0, 0);
+      
+      previewDimensions.textContent = `Dimensions: ${renderedCanvas.width}x${renderedCanvas.height}`;
+    };
+
+    const closeDialog = () => {
+      overlay.remove();
+    };
+
+    const generateTextImage = async () => {
+      const text = textInput.value || 'HOLA';
+      const pixelSize = parseInt(pixelSizeSlider.value);
+      
+      const canvas = TextToPixelRenderer.renderText(text, pixelSize);
+      const dataUrl = canvas.toDataURL();
+      
+      try {
+        const availableColors = Utils.extractAvailableColors();
+        if (availableColors.length < 10) {
+          Utils.showAlert("Please capture available colors first by uploading an image", "error");
+          return;
+        }
+
+        state.availableColors = availableColors;
+        state.colorsChecked = true;
+
+        const processor = new ImageProcessor(dataUrl);
+        await processor.load();
+
+        const { width, height } = processor.getDimensions();
+        const pixels = processor.getPixelData();
+
+        let totalValidPixels = 0;
+        for (let i = 0; i < pixels.length; i += 4) {
+          const isTransparent = pixels[i + 3] < (state.customTransparencyThreshold || CONFIG.TRANSPARENCY_THRESHOLD);
+          const isWhiteAndSkipped = !state.paintWhitePixels && Utils.isWhitePixel(pixels[i], pixels[i + 1], pixels[i + 2]);
+          if (!isTransparent && !isWhiteAndSkipped) {
+            totalValidPixels++;
+          }
+        }
+
+        state.imageData = {
+          width,
+          height,
+          pixels,
+          totalPixels: totalValidPixels,
+          processor,
+        };
+
+        state.totalPixels = totalValidPixels;
+        state.paintedPixels = 0;
+        state.imageLoaded = true;
+        state.lastPosition = { x: 0, y: 0 };
+        
+        Utils.initializePaintedMap(width, height);
+        
+        state.resizeSettings = null;
+        state.resizeIgnoreMask = null;
+        state.originalImage = { dataUrl, width, height };
+        saveBotSettings();
+
+        const imageBitmap = await createImageBitmap(processor.img);
+        await overlayManager.setImage(imageBitmap);
+        overlayManager.enable();
+        
+        const toggleOverlayBtn = document.getElementById('toggleOverlayBtn');
+        const resizeBtn = document.getElementById('resizeBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const startBtn = document.getElementById('startBtn');
+        
+        if (toggleOverlayBtn) {
+          toggleOverlayBtn.disabled = false;
+          toggleOverlayBtn.classList.add('active');
+          toggleOverlayBtn.setAttribute('aria-pressed', 'true');
+        }
+
+        if (resizeBtn) resizeBtn.disabled = false;
+        if (saveBtn) saveBtn.disabled = false;
+
+        if (state.startPosition && startBtn) {
+          startBtn.disabled = false;
+        }
+
+        updateStats();
+        updateDataButtons();
+        updateUI("imageLoaded", "success", { count: totalValidPixels });
+        
+        Utils.showAlert(`Text "${text}" converted to ${totalValidPixels} pixels!`, "success");
+        closeDialog();
+        
+      } catch (error) {
+        console.error("Error generating text image:", error);
+        Utils.showAlert("Error generating text image", "error");
+      }
+    };
+
+    textInput.addEventListener('input', updatePreview);
+    pixelSizeSlider.addEventListener('input', updatePreview);
+    generateBtn.addEventListener('click', generateTextImage);
+    cancelBtn.addEventListener('click', closeDialog);
+    closeBtn.addEventListener('click', closeDialog);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeDialog();
+    });
+
+    updatePreview();
+  }
+
   // Initialize Turnstile generator integration
   console.log("🚀 WPlace Auto-Image with Turnstile Token Generator loaded");
   console.log("🔑 Turnstile token generator: ALWAYS ENABLED (Background mode)");
@@ -6612,5 +6803,5 @@ function applyTheme() {
     window.addEventListener('beforeunload', () => {
       Utils.cleanupTurnstile();
     });
-  })
-})()
+  }
+})();
