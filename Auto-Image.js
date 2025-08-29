@@ -7191,8 +7191,8 @@ _resizeDialogCleanup = () => {
   }
 
   // Load theme preference immediately on startup before creating UI
-  loadThemePreference()
-  applyTheme()
+  loadThemePreference();
+  applyTheme();
 
   createUI().then(() => {
     // Generate token automatically after UI is ready
@@ -7205,15 +7205,15 @@ _resizeDialogCleanup = () => {
       const resetBtn = document.getElementById('resetAdvancedColorBtn');
       const algoSelect = document.getElementById('colorAlgorithmSelect');
       const chromaToggle = document.getElementById('enableChromaPenaltyToggle');
-  const transInput = document.getElementById('transparencyThresholdInput');
+      const transInput = document.getElementById('transparencyThresholdInput');
       const whiteInput = document.getElementById('whiteThresholdInput');
-  const ditherToggle = document.getElementById('enableDitheringToggle');
+      const ditherToggle = document.getElementById('enableDitheringToggle');
       if (algoSelect) algoSelect.addEventListener('change', e => { state.colorMatchingAlgorithm = e.target.value; saveBotSettings(); _updateResizePreview(); });
       if (chromaToggle) chromaToggle.addEventListener('change', e => { state.enableChromaPenalty = e.target.checked; saveBotSettings(); _updateResizePreview(); });
       if (chromaSlider && chromaValue) chromaSlider.addEventListener('input', e => { state.chromaPenaltyWeight = parseFloat(e.target.value)||0.15; chromaValue.textContent = state.chromaPenaltyWeight.toFixed(2); saveBotSettings(); _updateResizePreview(); });
       if (transInput) transInput.addEventListener('change', e => { const v=parseInt(e.target.value,10); if(!isNaN(v)&&v>=0&&v<=255){ state.customTransparencyThreshold=v; CONFIG.TRANSPARENCY_THRESHOLD=v; saveBotSettings(); _updateResizePreview(); }});
       if (whiteInput) whiteInput.addEventListener('change', e => { const v=parseInt(e.target.value,10); if(!isNaN(v)&&v>=200&&v<=255){ state.customWhiteThreshold=v; CONFIG.WHITE_THRESHOLD=v; saveBotSettings(); _updateResizePreview(); }});
-  if (ditherToggle) ditherToggle.addEventListener('change', e => { state.ditheringEnabled = e.target.checked; saveBotSettings(); _updateResizePreview(); });
+      if (ditherToggle) ditherToggle.addEventListener('change', e => { state.ditheringEnabled = e.target.checked; saveBotSettings(); _updateResizePreview(); });
       if (resetBtn) resetBtn.addEventListener('click', () => {
         state.colorMatchingAlgorithm='lab'; state.enableChromaPenalty=true; state.chromaPenaltyWeight=0.15; state.customTransparencyThreshold=CONFIG.TRANSPARENCY_THRESHOLD=100; state.customWhiteThreshold=CONFIG.WHITE_THRESHOLD=250; saveBotSettings(); const a=document.getElementById('colorAlgorithmSelect'); if(a) a.value='lab'; const ct=document.getElementById('enableChromaPenaltyToggle'); if(ct) ct.checked=true; if(chromaSlider) chromaSlider.value=0.15; if(chromaValue) chromaValue.textContent='0.15'; if(transInput) transInput.value=100; if(whiteInput) whiteInput.value=250; _updateResizePreview(); Utils.showAlert('Advanced color settings reset.', 'success'); });
     };
@@ -7224,5 +7224,5 @@ _resizeDialogCleanup = () => {
     window.addEventListener('beforeunload', () => {
       Utils.cleanupTurnstile();
     });
-  }
+  });
 })();
