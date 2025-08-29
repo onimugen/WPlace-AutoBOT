@@ -5689,7 +5689,7 @@ function applyTheme() {
 
           if (state.startPosition) {
             startBtn.disabled = false
-            resumeBtn.disabled = false
+            restartBtn.disabled = false
           }
 
           updateStats()
@@ -5719,7 +5719,7 @@ function applyTheme() {
         state.startPosition = null
         state.region = null
         startBtn.disabled = true
-        resumeBtn.disabled = true
+        restartBtn.disabled = true
 
         Utils.showAlert(Utils.t("selectPositionAlert"), "info")
         updateUI("waitingPosition", "default")
@@ -5798,7 +5798,7 @@ function applyTheme() {
       state.running = true
       state.stopFlag = false
       startBtn.disabled = true
-      resumeBtn.disabled = true
+      restartBtn.disabled = true
       stopBtn.disabled = false
       uploadBtn.disabled = true
       selectPosBtn.disabled = true
