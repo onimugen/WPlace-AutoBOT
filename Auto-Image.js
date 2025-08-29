@@ -289,6 +289,7 @@ function applyTheme() {
       resizeImage: "Resize Image",
       selectPosition: "Select Position",
       startPainting: "Start Painting",
+      resumePainting: "Resume Painting",
       stopPainting: "Stop Painting",
       checkingColors: "🔍 Checking available colors...",
       noColorsFound: "❌ Open the color palette on the site and try again!",
@@ -354,26 +355,16 @@ function applyTheme() {
       captchaFailed: "❌ Turnstile token generation failed. Trying fallback method...",
       automation: "Automation",
       noChargesThreshold: "⌛ Waiting for charges to reach {threshold}. Currently {current}. Next in {time}...",
-      startDefending: "Start Defending",
-      stopDefending: "Stop Defending",
-      selectDefendArea: "Select Defend Area",
-      defendingProgress: "🛡️ Defending: {defended}/{total} pixels...",
-      defendingStarted: "🛡️ Defend mode started!",
-      defendingStopped: "⏹️ Defend mode stopped",
-      defendingComplete: "✅ Defend area secured! {count} pixels defended.",
-      defendingError: "❌ Error during defend mode",
-      selectDefendAreaAlert: "Paint a pixel to mark the top-left corner of the defend area!",
-      waitingDefendArea: "👆 Waiting for you to paint the defend area reference pixel...",
-      defendAreaSet: "✅ Defend area successfully set!",
-      defendAreaTimeout: "❌ Defend area selection timeout",
     },
     ru: {
       title: "WPlace Авто-Изображение",
+      toggleOverlay: "Переключить оверлей",
       scanColors: "Сканировать цвета",
       uploadImage: "Загрузить изображение",
       resizeImage: "Изменить размер изображения",
       selectPosition: "Выбрать позицию",
       startPainting: "Начать рисование",
+      resumePainting: "Продолжить рисование",
       stopPainting: "Остановить рисование",
       checkingColors: "🔍 Проверка доступных цветов...",
       noColorsFound: "❌ Откройте палитру цветов на сайте и попробуйте снова!",
@@ -381,15 +372,15 @@ function applyTheme() {
       loadingImage: "🖼️ Загрузка изображения...",
       imageLoaded: "✅ Изображение загружено, валидных пикселей: {count}",
       imageError: "❌ Ошибка при загрузке изображения",
-      selectPositionAlert: "Нарисуйте первый пиксель в месте, откуда начнётся рисунок!",
-      waitingPosition: "👆 Ожидание, пока вы нарисуете опорный пиксель...",
-      positionSet: "✅ Позиция успешно установлена!",
-      positionTimeout: "❌ Время ожидания выбора позиции истекло",
-      startPaintingMsg: "🎨 Начинаем рисование...",
+      selectPositionAlert: "Нарисуйте первый пиксель в месте, где вы хотите, чтобы началось искусство!",
+      waitingPosition: "👆 Ожидание, пока вы нарисуете пиксель-справку...",
+      positionSet: "✅ Позиция установлена успешно!",
+      positionTimeout: "❌ Время ожидания выбора позиции",
+      startPaintingMsg: "🎨 Начало рисования...",
       paintingProgress: "🧱 Прогресс: {painted}/{total} пикселей...",
       noCharges: "⌛ Нет зарядов. Ожидание {time}...",
       paintingStopped: "⏹️ Рисование остановлено пользователем",
-      paintingComplete: "✅ Рисование завершено! Нарисовано пикселей: {count}.",
+      paintingComplete: "✅ Рисование завершено! {count} пикселей нарисовано.",
       paintingError: "❌ Ошибка во время рисования",
       missingRequirements: "❌ Сначала загрузите изображение и выберите позицию",
       progress: "Прогресс",
@@ -398,9 +389,9 @@ function applyTheme() {
       estimatedTime: "Примерное время",
       initMessage: "Нажмите 'Загрузить изображение', чтобы начать",
       waitingInit: "Ожидание инициализации...",
-      initializingToken: "🔧 Инициализация генератора Turnstile токенов...",
-      tokenReady: "✅ Генератор токенов готов - можете начинать рисование!",
-      tokenRetryLater: "⚠️ Генератор токенов повторит попытку при необходимости",
+      initializingToken: "🔧 Инициализация генератора токенов Turnstile...",
+      tokenReady: "✅ Генератор токенов готов - вы можете начать рисовать!",
+      tokenRetryLater: "⚠️ Генератор токенов повторит попытку, когда это необходимо",
       resizeSuccess: "✅ Изображение изменено до {width}x{height}",
       paintingPaused: "⏸️ Рисование приостановлено на позиции X: {x}, Y: {y}",
       captchaNeeded: "❗ Генерация токена не удалась. Пожалуйста, попробуйте через некоторое время.",
@@ -409,19 +400,19 @@ function applyTheme() {
       saveToFile: "Сохранить в файл",
       loadFromFile: "Загрузить из файла",
       dataManager: "Менеджер данных",
-      autoSaved: "✅ Прогресс сохранён автоматически",
-      dataLoaded: "✅ Прогресс успешно загружен",
-      fileSaved: "✅ Прогресс успешно сохранён в файл",
-      fileLoaded: "✅ Прогресс успешно загружен из файла",
-      noSavedData: "❌ Сохранённый прогресс не найден",
-      savedDataFound: "✅ Найден сохранённый прогресс! Загрузить, чтобы продолжить?",
+      autoSaved: "✅ Прогресс сохранен автоматически",
+      dataLoaded: "✅ Прогресс загружен успешно",
+      fileSaved: "✅ Прогресс сохранен в файл успешно",
+      fileLoaded: "✅ Прогресс загружен из файла успешно",
+      noSavedData: "❌ Нет сохраненного прогресса",
+      savedDataFound: "✅ Сохраненный прогресс найден! Загрузить, чтобы продолжить?",
       savedDate: "Сохранено: {date}",
       clickLoadToContinue: "Нажмите 'Загрузить прогресс', чтобы продолжить.",
       fileError: "❌ Ошибка при обработке файла",
       invalidFileFormat: "❌ Неверный формат файла",
       paintingSpeed: "Скорость рисования",
-      pixelsPerSecond: "пикселей/сек",
-      speedSetting: "Скорость: {speed} пикс./сек",
+      pixelsPerSecond: "пикселей/секунда",
+      speedSetting: "Скорость: {speed} пикселей/сек",
       settings: "Настройки",
       botSettings: "Настройки бота",
       close: "Закрыть",
@@ -432,7 +423,7 @@ function applyTheme() {
       autoCaptcha: "Авто-решение CAPTCHA (Turnstile)",
       autoCaptchaDesc: "Автоматически генерирует Turnstile токены используя встроенный генератор. Возвращается к автоматизации браузера при необходимости.",
       applySettings: "Применить настройки",
-      settingsSaved: "✅ Настройки успешно сохранены!",
+      settingsSaved: "✅ Настройки сохранены успешно!",
       cooldownSettings: "Настройки перезарядки",
       waitCharges: "Ждать до накопления зарядов",
       captchaSolving: "🔑 Генерирую Turnstile токен...",
@@ -442,26 +433,28 @@ function applyTheme() {
     },
     pt: {
       title: "WPlace Auto-Image",
-      scanColors: "Escanear Cores",
-      uploadImage: "Upload da Imagem",
-      resizeImage: "Redimensionar Imagem",
-      selectPosition: "Selecionar Posição",
-      startPainting: "Iniciar Pintura",
-      stopPainting: "Parar Pintura",
+      toggleOverlay: "Alternar sobreposição",
+      scanColors: "Escanear cores",
+      uploadImage: "Upload da imagem",
+      resizeImage: "Redimensionar imagem",
+      selectPosition: "Selecionar posição",
+      startPainting: "Iniciar pintura",
+      resumePainting: "Retomar pintura",
+      stopPainting: "Parar pintura",
       checkingColors: "🔍 Verificando cores disponíveis...",
       noColorsFound: "❌ Abra a paleta de cores no site e tente novamente!",
       colorsFound: "✅ {count} cores encontradas. Pronto para upload.",
       loadingImage: "🖼️ Carregando imagem...",
       imageLoaded: "✅ Imagem carregada com {count} pixels válidos",
       imageError: "❌ Erro ao carregar imagem",
-      selectPositionAlert: "Pinte o primeiro pixel на localização onde deseja que a arte comece!",
+      selectPositionAlert: "Pinte o primeiro pixel na localização onde deseja que a arte comece!",
       waitingPosition: "👆 Aguardando você pintar o pixel de referência...",
       positionSet: "✅ Posição definida com sucesso!",
       positionTimeout: "❌ Tempo esgotado para selecionar posição",
       startPaintingMsg: "🎨 Iniciando pintura...",
       paintingProgress: "🧱 Progresso: {painted}/{total} pixels...",
       noCharges: "⌛ Sem cargas. Aguardando {time}...",
-      paintingStopped: "⏹️ Pintura interromпида pelo usuário",
+      paintingStopped: "⏹️ Pintura interrompida pelo usuário",
       paintingComplete: "✅ Pintura concluída! {count} pixels pintados.",
       paintingError: "❌ Erro durante a pintura",
       missingRequirements: "❌ Carregue uma imagem e selecione uma posição primeiro",
@@ -474,7 +467,7 @@ function applyTheme() {
       initializingToken: "🔧 Inicializando gerador de tokens Turnstile...",
       tokenReady: "✅ Gerador de tokens pronto - você pode começar a pintar!",
       tokenRetryLater: "⚠️ Gerador de tokens tentará novamente quando necessário",
-      resizeSuccess: "✅ Imagem redimensionada для {width}x{height}",
+      resizeSuccess: "✅ Imagem redimensionada para {width}x{height}",
       paintingPaused: "⏸️ Pintura pausada na posição X: {x}, Y: {y}",
       captchaNeeded: "❗ Falha na geração de token. Tente novamente em alguns instantes.",
       saveData: "Salvar Progresso",
@@ -515,11 +508,13 @@ function applyTheme() {
     },
     vi: {
       title: "WPlace Auto-Image",
+      toggleOverlay: "Chuyển đổi lớp phủ",
       scanColors: "Quét màu",
       uploadImage: "Tải lên hình ảnh",
       resizeImage: "Thay đổi kích thước",
       selectPosition: "Chọn vị trí",
       startPainting: "Bắt đầu vẽ",
+      resumePainting: "Tiếp tục vẽ",
       stopPainting: "Dừng vẽ",
       checkingColors: "🔍 Đang kiểm tra màu sắc có sẵn...",
       noColorsFound: "❌ Hãy mở bảng màu trên trang web và thử lại!",
@@ -588,12 +583,14 @@ function applyTheme() {
     },
     fr: {
       title: "WPlace Auto-Image",
+      toggleOverlay: "Basculer la superposition",
       scanColors: "Scanner les couleurs",
       uploadImage: "Télécharger l'image",
       resizeImage: "Redimensionner l'image",
       selectPosition: "Sélectionner la position",
-      startPainting: "Commencer à peindre",
-      stopPainting: "Arrêter de peindre",
+      startPainting: "Commencer la peinture",
+      resumePainting: "Reprendre la peinture",
+      stopPainting: "Arrêter la peinture",
       checkingColors: "🔍 Vérification des couleurs disponibles...",
       noColorsFound: "❌ Ouvrez la palette de couleurs sur le site et réessayez!",
       colorsFound: "✅ {count} couleurs trouvées. Prêt à télécharger.",
@@ -661,12 +658,14 @@ function applyTheme() {
     },
     id: {
       title: "WPlace Auto-Image",
-      scanColors: "Pindai Warna",
-      uploadImage: "Unggah Gambar",
-      resizeImage: "Ubah Ukuran Gambar",
-      selectPosition: "Pilih Posisi",
-      startPainting: "Mulai Melukis",
-      stopPainting: "Berhenti Melukis",
+      toggleOverlay: "Ubah overlay",
+      scanColors: "Pindai warna",
+      uploadImage: "Unggah gambar",
+      resizeImage: "Ubah ukuran gambar",
+      selectPosition: "Pilih posisi",
+      startPainting: "Mulai melukis",
+      resumePainting: "Lanjutkan melukis",
+      stopPainting: "Berhenti melukis",
       checkingColors: "🔍 Memeriksa warna yang tersedia...",
       noColorsFound: "❌ Buka palet warna di situs dan coba lagi!",
       colorsFound: "✅ {count} warna ditemukan. Siap untuk diunggah.",
@@ -696,10 +695,10 @@ function applyTheme() {
       resizeSuccess: "✅ Gambar berhasil diubah ukurannya menjadi {width}x{height}",
       paintingPaused: "⏸️ Melukis dijeda di posisi X: {x}, Y: {y}",
       captchaNeeded: "❗ Pembuatan token gagal. Silakan coba lagi sebentar lagi.",
-      saveData: "Simpan Progres",
-      loadData: "Muat Progres",
-      saveToFile: "Simpan ke File",
-      loadFromFile: "Muat dari File",
+      saveData: "Simpan progres",
+      loadData: "Muat progres",
+      saveToFile: "Simpan ke file",
+      loadFromFile: "Muat dari file",
       dataManager: "Data",
       autoSaved: "✅ Progres disimpan secara otomatis",
       dataLoaded: "✅ Progres berhasil dimuat",
@@ -711,7 +710,7 @@ function applyTheme() {
       clickLoadToContinue: "Klik 'Muat Progres' untuk melanjutkan.",
       fileError: "❌ Kesalahan saat memproses file",
       invalidFileFormat: "❌ Format file tidak valid",
-      paintingSpeed: "Kecepatan Melukis",
+      paintingSpeed: "Kecepatan melukis",
       pixelsPerSecond: "piksel/detik",
       speedSetting: "Kecepatan: {speed} piksel/detik",
       settings: "Pengaturan",
@@ -723,13 +722,13 @@ function applyTheme() {
       languageSelectDesc: "Pilih bahasa yang Anda inginkan. Perubahan akan berlaku segera.",
       autoCaptcha: "Penyelesai CAPTCHA Otomatis",
       autoCaptchaDesc: "Mencoba menyelesaikan CAPTCHA secara otomatis dengan mensimulasikan penempatan piksel manual saat token kedaluwarsa.",
-      applySettings: "Terapkan Pengaturan",
+      applySettings: "Terapkan pengaturan",
       settingsSaved: "✅ Pengaturan berhasil disimpan!",
-      cooldownSettings: "Pengaturan Cooldown",
+      cooldownSettings: "Pengaturan cooldown",
       waitCharges: "Tunggu hingga muatan mencapai",
       captchaSolving: "🤖 Mencoba menyelesaikan CAPTCHA...",
       captchaFailed: "❌ Gagal menyelesaikan CAPTCHA. Lukis satu piksel secara manual.",
-      automation: "Automasi",
+      automation: "Otomasi",
       noChargesThreshold: "⌛ Menunggu muatan mencapai {threshold}. Saat ini: {current}. Berikutnya dalam {time}...",
     },
     tr: {
@@ -739,7 +738,8 @@ function applyTheme() {
       uploadImage: "Resim Yükle",
       resizeImage: "Resmi Yeniden Boyutlandır",
       selectPosition: "Konum Seç",
-      startPainting: "Boyamayı Başlat",
+      startPainting: "Boyamaya Başla",
+      resumePainting: "Boyamaya Devam Et",
       stopPainting: "Boyamayı Durdur",
       checkingColors: "🔍 Uygun renkler kontrol ediliyor...",
       noColorsFound: "❌ Sitede renk paletini açın ve tekrar deneyin!",
@@ -764,6 +764,9 @@ function applyTheme() {
       estimatedTime: "Tahmini süre",
       initMessage: "Başlamak için 'Resim Yükle'ye tıklayın",
       waitingInit: "Başlatma bekleniyor...",
+      initializingToken: "🔧 Turnstile token üreticisini başlatma...",
+      tokenReady: "✅ Token üreticisi hazır - boyamaya başlayabilirsiniz!",
+      tokenRetryLater: "⚠️ Token üreticisi gerekli olduğunda tekrar deneyecek",
       resizeSuccess: "✅ Resim {width}x{height} boyutuna yeniden boyutlandırıldı",
       paintingPaused: "⏸️ Boyama duraklatıldı, Konum X: {x}, Y: {y}",
       captchaNeeded: "❗ CAPTCHA gerekli. Devam etmek için bir pikseli manuel olarak boyayın.",
@@ -797,7 +800,7 @@ function applyTheme() {
       applySettings: "Ayarları Uygula",
       settingsSaved: "✅ Ayarlar başarıyla kaydedildi!",
       cooldownSettings: "Bekleme Süresi Ayarları",
-      waitCharges: "Haklar şu seviyeye ulaşana kadar bekle",
+      waitCharges: "Hakların şu seviyeye ulaşana kadar bekle",
       captchaSolving: "🤖 CAPTCHA çözülmeye çalışılıyor...",
       captchaFailed: "❌ Oto-CAPTCHA başarısız oldu. Bir pikseli manuel boyayın.",
       automation: "Otomasyon",
@@ -811,6 +814,7 @@ function applyTheme() {
       resizeImage: "调整大小",
       selectPosition: "选择位置",
       startPainting: "开始绘制",
+      resumePainting: "继续绘制",
       stopPainting: "停止绘制",
       checkingColors: "🔍 正在检查可用颜色...",
       noColorsFound: "❌ 请在网站上打开调色板后再试！",
@@ -826,7 +830,7 @@ function applyTheme() {
       paintingProgress: "🧱 进度: {painted}/{total} 像素...",
       noCharges: "⌛ 无可用次数，等待 {time}...",
       paintingStopped: "⏹️ 已被用户停止",
-      paintingComplete: "✅ 绘制完成！共绘制 {count} 个像素。",
+      paintingComplete: "✅ 绘制完成！ {count} 像素绘制。",
       paintingError: "❌ 绘制过程中出错",
       missingRequirements: "❌ 请先加载图像并选择位置",
       progress: "进度",
@@ -870,8 +874,6 @@ function applyTheme() {
       autoCaptchaDesc: "使用集成的生成器自动生成 Turnstile 令牌，必要时回退到浏览器自动化。",
       applySettings: "应用设置",
       settingsSaved: "✅ 设置保存成功！",
-      speedOn: "开启",
-      speedOff: "关闭",
       cooldownSettings: "冷却设置",
       waitCharges: "等待次数达到",
       captchaSolving: "🔑 正在生成 Turnstile 令牌...",
@@ -887,6 +889,7 @@ function applyTheme() {
       resizeImage: "調整大小",
       selectPosition: "選擇位置",
       startPainting: "開始繪製",
+      resumePainting: "繼續繪製",
       stopPainting: "停止繪製",
       checkingColors: "🔍 正在檢查可用顏色...",
       noColorsFound: "❌ 請在網站上打開調色板後再試！",
@@ -900,9 +903,9 @@ function applyTheme() {
       positionTimeout: "❌ 選擇位置逾時",
       startPaintingMsg: "🎨 開始繪製...",
       paintingProgress: "🧱 進度: {painted}/{total} 像素...",
-      noCharges: "⌛ 無可用次數，等待 {time}...",
+      noCharges: "⌛ 沒有可用次數，等待 {time}...",
       paintingStopped: "⏹️ 已被使用者停止",
-      paintingComplete: "✅ 繪製完成！共繪製 {count} 個像素。",
+      paintingComplete: "✅ 繪製完成！ {count} 像素繪製。",
       paintingError: "❌ 繪製過程中出錯",
       missingRequirements: "❌ 請先載入圖像並選擇位置",
       progress: "進度",
@@ -946,8 +949,6 @@ function applyTheme() {
       autoCaptchaDesc: "使用整合的產生器自動產生 Turnstile 令牌，必要時回退到瀏覽器自動化。",
       applySettings: "套用設定",
       settingsSaved: "✅ 設定儲存成功！",
-      speedOn: "開啟",
-      speedOff: "關閉",
       cooldownSettings: "冷卻設定",
       waitCharges: "等待次數達到",
       captchaSolving: "🔑 正在產生 Turnstile 令牌...",
@@ -962,8 +963,9 @@ function applyTheme() {
       uploadImage: "画像をアップロード",
       resizeImage: "画像サイズ変更",
       selectPosition: "位置を選択",
-      startPainting: "描画開始",
-      stopPainting: "描画停止",
+      startPainting: "ペイント開始",
+      resumePainting: "ペイント再開",
+      stopPainting: "ペイント停止",
       checkingColors: "🔍 利用可能な色を確認中...",
       noColorsFound: "❌ サイトでカラーパレットを開いて再試行してください！",
       colorsFound: "✅ 利用可能な色 {count} 件を検出。アップロード可能。",
@@ -974,12 +976,12 @@ function applyTheme() {
       waitingPosition: "👆 参照ピクセルの描画を待っています...",
       positionSet: "✅ 位置を設定しました！",
       positionTimeout: "❌ 位置選択のタイムアウト",
-      startPaintingMsg: "🎨 描画を開始...",
+      startPaintingMsg: "🎨 ペイントを開始...",
       paintingProgress: "🧱 進捗: {painted}/{total} ピクセル...",
       noCharges: "⌛ チャージなし。{time} 待機...",
       paintingStopped: "⏹️ ユーザーにより停止されました",
-      paintingComplete: "✅ 描画完了！ {count} ピクセル描画。",
-      paintingError: "❌ 描画中にエラー",
+      paintingComplete: "✅ ペイント完了！ {count} ピクセル描画。",
+      paintingError: "❌ ペイント中にエラー",
       missingRequirements: "❌ 先に画像を読み込み位置を選択してください",
       progress: "進捗",
       pixels: "ピクセル",
@@ -988,17 +990,17 @@ function applyTheme() {
       initMessage: "「画像をアップロード」をクリックして開始",
       waitingInit: "初期化待機中...",
       initializingToken: "🔧 Turnstile トークン生成器を初期化中...",
-      tokenReady: "✅ トークン生成器準備完了 - 描画できます！",
+      tokenReady: "✅ トークン生成器準備完了 - ペイントできます！",
       tokenRetryLater: "⚠️ 必要に応じて再試行します",
       resizeSuccess: "✅ 画像を {width}x{height} にリサイズ",
-      paintingPaused: "⏸️ X: {x}, Y: {y} で一時停止",
+      paintingPaused: "⏸️ ペイントを一時停止 X: {x}, Y: {y}",
       captchaNeeded: "❗ トークン生成に失敗。少ししてから再試行してください。",
       saveData: "進捗を保存",
       loadData: "進捗を読み込み",
       saveToFile: "ファイルへ保存",
       loadFromFile: "ファイルから読み込み",
       dataManager: "データ管理",
-      autoSaved: "✅ 自動保存しました",
+      autoSaved: "✅ 進捗を自動保存しました",
       dataLoaded: "✅ 進捗を読み込みました",
       fileSaved: "✅ ファイルに保存しました",
       fileLoaded: "✅ ファイルから読み込みました",
@@ -1008,7 +1010,7 @@ function applyTheme() {
       clickLoadToContinue: "「進捗を読み込み」をクリックして続行。",
       fileError: "❌ ファイル処理エラー",
       invalidFileFormat: "❌ 無効なファイル形式",
-      paintingSpeed: "描画速度",
+      paintingSpeed: "ペイント速度",
       pixelsPerSecond: "ピクセル/秒",
       speedSetting: "速度: {speed} ピクセル/秒",
       settings: "設定",
@@ -1022,11 +1024,9 @@ function applyTheme() {
       autoCaptchaDesc: "統合ジェネレーターで Turnstile トークンを自動生成し必要に応じてブラウザ自動化にフォールバック。",
       applySettings: "設定を適用",
       settingsSaved: "✅ 設定を保存しました！",
-      speedOn: "オン",
-      speedOff: "オフ",
       cooldownSettings: "クールダウン設定",
       waitCharges: "チャージ数が次に達するまで待機",
-      captchaSolving: "🔑 Turnstile トークン生成中...",
+      captchaSolving: "🤖 Turnstile トークン生成中...",
       captchaFailed: "❌ トークン生成失敗。フォールバックを試行...",
       automation: "自動化",
       noChargesThreshold: "⌛ チャージ {threshold} を待機中。現在 {current}。次は {time} 後...",
@@ -1038,8 +1038,9 @@ function applyTheme() {
       uploadImage: "이미지 업로드",
       resizeImage: "크기 조정",
       selectPosition: "위치 선택",
-      startPainting: "그리기 시작",
-      stopPainting: "그리기 중지",
+      startPainting: "페인팅 시작",
+      resumePainting: "페인팅 재개",
+      stopPainting: "페인팅 중지",
       checkingColors: "🔍 사용 가능한 색상 확인 중...",
       noColorsFound: "❌ 사이트에서 색상 팔레트를 연 후 다시 시도하세요!",
       colorsFound: "✅ 사용 가능한 색상 {count}개 발견. 업로드 준비 완료.",
@@ -1050,12 +1051,12 @@ function applyTheme() {
       waitingPosition: "👆 기준 픽셀을 칠할 때까지 대기 중...",
       positionSet: "✅ 위치 설정 완료!",
       positionTimeout: "❌ 위치 선택 시간 초과",
-      startPaintingMsg: "🎨 그리기 시작...",
+      startPaintingMsg: "🎨 페인팅 시작...",
       paintingProgress: "🧱 진행: {painted}/{total} 픽셀...",
       noCharges: "⌛ 사용 가능 횟수 없음. {time} 대기...",
-      paintingStopped: "⏹️ 사용자에 의해 중지됨",
-      paintingComplete: "✅ 그리기 완료! {count} 픽셀 그렸습니다.",
-      paintingError: "❌ 그리는 중 오류",
+      paintingStopped: "⏹️ 페인팅을 사용자가 중지했습니다",
+      paintingComplete: "✅ 페인팅 완료! {count} 픽셀을 그렸습니다.",
+      paintingError: "❌ 페인팅 중 오류",
       missingRequirements: "❌ 먼저 이미지를 불러오고 위치를 선택하세요",
       progress: "진행",
       pixels: "픽셀",
@@ -1064,10 +1065,10 @@ function applyTheme() {
       initMessage: "'이미지 업로드'를 클릭하여 시작",
       waitingInit: "초기화 대기 중...",
       initializingToken: "🔧 Turnstile 토큰 생성기 초기화 중...",
-      tokenReady: "✅ 토큰 생성 준비 완료 - 그리기를 시작할 수 있습니다!",
-      tokenRetryLater: "⚠️ 필요 시 다시 시도합니다",
-      resizeSuccess: "✅ 이미지가 {width}x{height} 크기로 조정됨",
-      paintingPaused: "⏸️ 위치 X: {x}, Y: {y} 에서 일시 중지",
+      tokenReady: "✅ 토큰 생성 준비 완료 - 페인팅을 시작할 수 있습니다!",
+      tokenRetryLater: "⚠️ 토큰 생성기 다시 시도",
+      resizeSuccess: "✅ 이미지 {width}x{height} 크기로 조정됨",
+      paintingPaused: "⏸️ 페인팅 일시 중지 X: {x}, Y: {y}",
       captchaNeeded: "❗ 토큰 생성 실패. 잠시 후 다시 시도하세요.",
       saveData: "진행 저장",
       loadData: "진행 불러오기",
@@ -1084,7 +1085,7 @@ function applyTheme() {
       clickLoadToContinue: "'진행 불러오기'를 클릭하여 계속.",
       fileError: "❌ 파일 처리 오류",
       invalidFileFormat: "❌ 잘못된 파일 형식",
-      paintingSpeed: "그리기 속도",
+      paintingSpeed: "페인팅 속도",
       pixelsPerSecond: "픽셀/초",
       speedSetting: "속도: {speed} 픽셀/초",
       settings: "설정",
@@ -1098,11 +1099,9 @@ function applyTheme() {
       autoCaptchaDesc: "통합 생성기를 사용해 Turnstile 토큰을 자동 생성하고 필요 시 브라우저 자동화로 폴백.",
       applySettings: "설정 적용",
       settingsSaved: "✅ 설정 저장 완료!",
-      speedOn: "켜짐",
-      speedOff: "꺼짐",
       cooldownSettings: "쿨다운 설정",
       waitCharges: "횟수가 다음 값에 도달할 때까지 대기",
-      captchaSolving: "🔑 Turnstile 토큰 생성 중...",
+      captchaSolving: "🤖 Turnstile 토큰 생성 중...",
       captchaFailed: "❌ 토큰 생성 실패. 폴백 시도...",
       automation: "자동화",
       noChargesThreshold: "⌛ 횟수가 {threshold} 에 도달할 때까지 대기 중. 현재 {current}. 다음 {time} 후...",
@@ -1114,8 +1113,9 @@ function applyTheme() {
       uploadImage: "Завантажити зображення",
       resizeImage: "Змінити розмір зображення",
       selectPosition: "Вибрати позицію",
-      startPainting: "Почати малювання",
-      stopPainting: "Зупинити малювання",
+      startPainting: "Почати Малювання",
+      resumePainting: "Продовжити Малювання",
+      stopPainting: "Зупинити Малювання",
       checkingColors: "🔍 Перевірка доступних кольорів...",
       noColorsFound: "❌ Відкрий палітру кольорів на сайті та спробуй ще раз!",
       colorsFound: "✅ Знайдено {count} доступних кольорів. Готово до завантаження.",
@@ -1186,12 +1186,10 @@ function applyTheme() {
   // GLOBAL STATE
   const state = {
     running: false,
-    defending: false, // New defend mode state
     imageLoaded: false,
     processing: false,
     totalPixels: 0,
     paintedPixels: 0,
-    defendedPixels: 0, // Track defended pixels
     availableColors: [],
     activeColorPalette: [], // User-selected colors for conversion
     paintWhitePixels: true, // Default to ON
@@ -1199,13 +1197,9 @@ function applyTheme() {
     maxCharges: 1, // Default max charges
     cooldown: CONFIG.COOLDOWN_DEFAULT,
     imageData: null,
-    defendData: null, // Store defend area data
     stopFlag: false,
     colorsChecked: false,
     startPosition: null,
-    defendPosition: null, // Defend area start position
-    selectingPosition: false,
-    selectingDefendArea: false, // New defend area selection state
     region: null,
     minimized: false,
     lastPosition: { x: 0, y: 0 },
@@ -3501,6 +3495,10 @@ function applyTheme() {
                 <i class="fas fa-play"></i>
                 <span>${Utils.t("startPainting")}</span>
               </button>
+              <button id="resumeBtn" class="wplace-btn wplace-btn-resume" disabled>
+                <i class="fas fa-play-circle"></i>
+                <span>${Utils.t("resumePainting")}</span>
+              </button>
               <button id="stopBtn" class="wplace-btn wplace-btn-stop" disabled>
                 <i class="fas fa-stop"></i>
                 <span>${Utils.t("stopPainting")}</span>
@@ -3515,28 +3513,6 @@ function applyTheme() {
           </div>
         </div>
 
-        <!-- Defend Section -->
-        <div class="wplace-section">
-          <div class="wplace-section-title">🛡️ Defend Mode</div>
-          <div class="wplace-controls">
-            <div class="wplace-row single">
-              <button id="selectDefendBtn" class="wplace-btn wplace-btn-select" disabled>
-                <i class="fas fa-shield-alt"></i>
-                <span>${Utils.t("selectDefendArea")}</span>
-              </button>
-            </div>
-            <div class="wplace-row">
-              <button id="startDefendBtn" class="wplace-btn wplace-btn-start" disabled>
-                <i class="fas fa-shield-alt"></i>
-                <span>${Utils.t("startDefending")}</span>
-              </button>
-              <button id="stopDefendBtn" class="wplace-btn wplace-btn-stop" disabled>
-                <i class="fas fa-stop"></i>
-                <span>${Utils.t("stopDefending")}</span>
-              </button>
-            </div>
-          </div>
-        </div>
 
         <!-- Cooldown Section -->
         <div class="wplace-section">
@@ -4657,11 +4633,12 @@ function applyTheme() {
             } else {
               uploadBtn.disabled = false;
               selectPosBtn.disabled = false;
-              selectDefendBtn.disabled = false;
+              resizeBtn.disabled = false;
             }
 
             if (state.imageLoaded && state.startPosition && state.region && state.colorsChecked) {
               startBtn.disabled = false
+              resumeBtn.disabled = false
             }
           } else {
             Utils.showAlert("❌ Erro ao carregar progresso", "error")
@@ -4707,7 +4684,6 @@ function applyTheme() {
             if (state.colorsChecked) {
               uploadBtn.disabled = false
               selectPosBtn.disabled = false
-              selectDefendBtn.disabled = false
               resizeBtn.disabled = false
             } else {
               uploadBtn.disabled = false;
@@ -4715,6 +4691,7 @@ function applyTheme() {
 
             if (state.imageLoaded && state.startPosition && state.region && state.colorsChecked) {
               startBtn.disabled = false
+              resumeBtn.disabled = false
             }
           }
         } catch (error) {
@@ -5643,7 +5620,6 @@ function applyTheme() {
           updateUI("colorsFound", "success", { count: availableColors.length });
           updateStats();
           selectPosBtn.disabled = false;
-          selectDefendBtn.disabled = false;
           // Only enable resize button if image is also loaded
           if (state.imageLoaded) {
             resizeBtn.disabled = false;
@@ -5713,6 +5689,7 @@ function applyTheme() {
 
           if (state.startPosition) {
             startBtn.disabled = false
+            resumeBtn.disabled = false
           }
 
           updateStats()
@@ -5742,6 +5719,7 @@ function applyTheme() {
         state.startPosition = null
         state.region = null
         startBtn.disabled = true
+        resumeBtn.disabled = true
 
         Utils.showAlert(Utils.t("selectPositionAlert"), "info")
         updateUI("waitingPosition", "default")
@@ -5778,6 +5756,7 @@ function applyTheme() {
 
                   if (state.imageLoaded) {
                     startBtn.disabled = false
+                    resumeBtn.disabled = false
                   }
 
                   window.fetch = originalFetch
@@ -5819,12 +5798,10 @@ function applyTheme() {
       state.running = true
       state.stopFlag = false
       startBtn.disabled = true
+      resumeBtn.disabled = true
       stopBtn.disabled = false
       uploadBtn.disabled = true
       selectPosBtn.disabled = true
-      selectDefendBtn.disabled = true
-      startDefendBtn.disabled = true
-      stopDefendBtn.disabled = true
       resizeBtn.disabled = true
       saveBtn.disabled = true
       toggleOverlayBtn.disabled = true;
@@ -5844,221 +5821,47 @@ function applyTheme() {
 
         if (!state.stopFlag) {
           startBtn.disabled = true
+          resumeBtn.disabled = true
           uploadBtn.disabled = false
           selectPosBtn.disabled = false
-          selectDefendBtn.disabled = false
           resizeBtn.disabled = false
         } else {
           startBtn.disabled = false
-          selectDefendBtn.disabled = false
+          resumeBtn.disabled = false
         }
         toggleOverlayBtn.disabled = false;
       }
     }
 
-    // Defend area selection function
-    async function selectDefendArea() {
-      if (!state.colorsChecked) {
-        Utils.showAlert("Please scan colors first!", "error")
-        return
-      }
 
-      state.selectingDefendArea = true
-      selectDefendBtn.disabled = true
-      
-      Utils.showAlert(Utils.t("selectDefendAreaAlert"), "info")
-      updateUI("waitingDefendArea", "info")
-
-      const timeout = setTimeout(() => {
-        if (state.selectingDefendArea) {
-          state.selectingDefendArea = false
-          selectDefendBtn.disabled = false
-          updateUI("defendAreaTimeout", "error")
-          Utils.showAlert(Utils.t("defendAreaTimeout"), "error")
-        }
-      }, 30000) // 30 second timeout
-
-      // Listen for pixel placement to capture defend area position
-      const originalFetch = window.fetch
-      window.fetch = async function(...args) {
-        const result = await originalFetch.apply(this, args)
-        
-        if (state.selectingDefendArea && args[0] && args[0].includes('/api/pixel')) {
-          try {
-            const requestData = JSON.parse(args[1]?.body || '{}')
-            if (requestData.x !== undefined && requestData.y !== undefined) {
-              clearTimeout(timeout)
-              state.selectingDefendArea = false
-              
-              // Calculate region from pixel coordinates
-              const regionX = Math.floor(requestData.x / 1000)
-              const regionY = Math.floor(requestData.y / 1000)
-              const pixelX = requestData.x % 1000
-              const pixelY = requestData.y % 1000
-              
-              state.defendPosition = { x: pixelX, y: pixelY }
-              state.region = { x: regionX, y: regionY }
-              
-              selectDefendBtn.disabled = false
-              startDefendBtn.disabled = false
-              
-              updateUI("defendAreaSet", "success")
-              Utils.showAlert(Utils.t("defendAreaSet"), "success")
-              
-              // Restore original fetch
-              window.fetch = originalFetch
-            }
-          } catch (e) {
-            console.error("Error parsing defend area selection:", e)
-          }
-        }
-        
-        return result
-      }
-    }
-
-    // Start defending function
-    async function startDefending() {
-      if (!state.defendPosition || !state.region) {
-        Utils.showAlert("Please select defend area first!", "error")
-        return false
-      }
-
-      await ensureToken()
-      if (!turnstileToken) return false
-
-      state.defending = true
-      state.stopFlag = false
-      startDefendBtn.disabled = true
-      stopDefendBtn.disabled = false
-      selectDefendBtn.disabled = true
-
-      updateUI("defendingStarted", "success")
-      Utils.showAlert(Utils.t("defendingStarted"), "success")
-
-      try {
-        await processDefendArea()
-        return true
-      } catch (error) {
-        console.error("Defend error:", error)
-        updateUI("defendingError", "error")
-        Utils.showAlert(Utils.t("defendingError"), "error")
-        return false
-      } finally {
-        state.defending = false
-        stopDefendBtn.disabled = true
-        selectDefendBtn.disabled = false
-        
-        if (!state.stopFlag) {
-          startDefendBtn.disabled = false
-        }
-      }
-    }
-
-    // Process defend area - monitors and repairs pixels
-    async function processDefendArea() {
-      const defendWidth = 50  // Default defend area size
-      const defendHeight = 50
-      let defendedCount = 0
-      
-      while (state.defending && !state.stopFlag) {
-        try {
-          // Check if we have enough charges
-          const { charges } = await WPlaceService.getCharges()
-          state.currentCharges = Math.floor(charges)
-          
-          if (state.currentCharges < state.cooldownChargeThreshold) {
-            updateUI("noChargesThreshold", "warning", {
-              threshold: state.cooldownChargeThreshold,
-              current: state.currentCharges,
-              time: Utils.formatTime(state.cooldown)
-            })
-            await new Promise(resolve => setTimeout(resolve, 5000))
-            continue
-          }
-
-          // Scan defend area for changes
-          const pixelsToDefend = []
-          
-          for (let dy = 0; dy < defendHeight && state.defending; dy++) {
-            for (let dx = 0; dx < defendWidth && state.defending; dx++) {
-              const pixelX = state.defendPosition.x + dx
-              const pixelY = state.defendPosition.y + dy
-              
-              // Get current pixel color from canvas
-              try {
-                const tileRegionX = state.region.x
-                const tileRegionY = state.region.y
-                const existingColorRGBA = await overlayManager.getTilePixelColor(tileRegionX, tileRegionY, pixelX, pixelY).catch(() => null)
-                
-                if (existingColorRGBA && Array.isArray(existingColorRGBA)) {
-                  const [r, g, b] = existingColorRGBA
-                  
-                  // Check if pixel needs defending (you can customize this logic)
-                  // For now, we'll defend against any non-white pixels in the area
-                  if (r !== 255 || g !== 255 || b !== 255) {
-                    // This pixel has been "attacked" - add to defend list
-                    pixelsToDefend.push({
-                      x: pixelX + (tileRegionX * 1000),
-                      y: pixelY + (tileRegionY * 1000),
-                      color: 0 // White color ID - customize as needed
-                    })
-                  }
-                }
-              } catch (e) {
-                console.warn(`Failed to check pixel at (${pixelX}, ${pixelY}):`, e)
-              }
-            }
-          }
-
-          // Defend pixels that need repair
-          if (pixelsToDefend.length > 0) {
-            console.log(`🛡️ Defending ${pixelsToDefend.length} pixels`)
-            
-            for (const pixel of pixelsToDefend) {
-              if (!state.defending || state.stopFlag) break
-              
-              try {
-                await WPlaceService.placePixel(pixel.x, pixel.y, pixel.color, turnstileToken)
-                defendedCount++
-                
-                updateUI("defendingProgress", "info", {
-                  defended: defendedCount,
-                  total: defendWidth * defendHeight
-                })
-                
-                // Small delay between pixels
-                await new Promise(resolve => setTimeout(resolve, 100))
-              } catch (error) {
-                console.error(`Failed to defend pixel at (${pixel.x}, ${pixel.y}):`, error)
-              }
-            }
-          }
-
-          // Wait before next scan
-          await new Promise(resolve => setTimeout(resolve, 2000))
-          
-        } catch (error) {
-          console.error("Defend loop error:", error)
-          await new Promise(resolve => setTimeout(resolve, 5000))
-        }
-      }
-
-      if (defendedCount > 0) {
-        updateUI("defendingComplete", "success", { count: defendedCount })
-        Utils.showAlert(Utils.t("defendingComplete", { count: defendedCount }), "success")
-      }
-    }
 
     if (startBtn) {
       startBtn.addEventListener("click", startPainting)
+    }
+
+    const resumeBtn = document.getElementById("resumeBtn")
+    if (resumeBtn) {
+      resumeBtn.addEventListener("click", () => {
+        // Resume painting from current progress
+        if (!state.imageLoaded || !state.startPosition || !state.region) {
+          Utils.showAlert(Utils.t("missingRequirements"), "error")
+          return
+        }
+        
+        if (!state.colorsChecked) {
+          Utils.showAlert(Utils.t("noColorsFound"), "error")
+          return
+        }
+
+        // Start painting from current progress
+        startPainting()
+      })
     }
 
     if (stopBtn) {
       stopBtn.addEventListener("click", () => {
         state.stopFlag = true
         state.running = false
-        state.defending = false
         stopBtn.disabled = true
         updateUI("paintingStopped", "warning")
 
@@ -6066,29 +5869,6 @@ function applyTheme() {
           Utils.saveProgress()
           Utils.showAlert(Utils.t("autoSaved"), "success")
         }
-      })
-    }
-
-    // Defend button event listeners
-    const selectDefendBtn = document.getElementById("selectDefendBtn")
-    const startDefendBtn = document.getElementById("startDefendBtn")
-    const stopDefendBtn = document.getElementById("stopDefendBtn")
-
-    if (selectDefendBtn) {
-      selectDefendBtn.addEventListener("click", selectDefendArea)
-    }
-
-    if (startDefendBtn) {
-      startDefendBtn.addEventListener("click", startDefending)
-    }
-
-    if (stopDefendBtn) {
-      stopDefendBtn.addEventListener("click", () => {
-        state.stopFlag = true
-        state.defending = false
-        stopDefendBtn.disabled = true
-        updateUI("defendingStopped", "warning")
-        Utils.showAlert(Utils.t("defendingStopped"), "warning")
       })
     }
 
