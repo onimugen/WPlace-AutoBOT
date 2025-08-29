@@ -82,7 +82,8 @@ javascript:fetch("https://raw.githubusercontent.com/Wplace-AutoBot/WPlace-AutoBO
 ### ✨┃Features
 
 - [x] Automatically farms droplets/levels
-- [x] Correct Color Pixel Skip
+- [x] **Enhanced Pixel Skipping** - Three-tier detection system (exact match, palette match, smart similarity)
+- [x] **Improved Time Estimation** - Accurate painting time calculation with batch processing awareness
 - [x] Overlay(you dont need bluemarble anymore)
 - [x] Paint over multiple tiles
 - [x] Multi Account Auto Switcher Via Other Branch ; https://github.com/Wplace-AutoBot/WPlace-AutoBOT/tree/Acc-switch (Ram Efficient LOL)
@@ -90,6 +91,8 @@ javascript:fetch("https://raw.githubusercontent.com/Wplace-AutoBot/WPlace-AutoBO
 - [x] Advance Color Processing
 - [x] MultiLanguage Support
 - [x] Multi account through save and load feature
+- [x] **Configurable Smart Skipping** - Adjustable RGB similarity threshold
+- [x] **Debug Logging** - Detailed pixel skipping console output
 - [x] Works on mobile :P
 
 
