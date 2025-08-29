@@ -289,7 +289,7 @@ function applyTheme() {
       resizeImage: "Resize Image",
       selectPosition: "Select Position",
       startPainting: "Start Painting",
-      resumePainting: "Resume Painting",
+      restartPainting: "Restart Painting",
       stopPainting: "Stop Painting",
       checkingColors: "🔍 Checking available colors...",
       noColorsFound: "❌ Open the color palette on the site and try again!",
@@ -364,7 +364,7 @@ function applyTheme() {
       resizeImage: "Изменить размер изображения",
       selectPosition: "Выбрать позицию",
       startPainting: "Начать рисование",
-      resumePainting: "Продолжить рисование",
+      restartPainting: "Перезапустить рисование",
       stopPainting: "Остановить рисование",
       checkingColors: "🔍 Проверка доступных цветов...",
       noColorsFound: "❌ Откройте палитру цветов на сайте и попробуйте снова!",
@@ -439,7 +439,7 @@ function applyTheme() {
       resizeImage: "Redimensionar imagem",
       selectPosition: "Selecionar posição",
       startPainting: "Iniciar pintura",
-      resumePainting: "Retomar pintura",
+      restartPainting: "Reiniciar Pintura",
       stopPainting: "Parar pintura",
       checkingColors: "🔍 Verificando cores disponíveis...",
       noColorsFound: "❌ Abra a paleta de cores no site e tente novamente!",
@@ -463,7 +463,7 @@ function applyTheme() {
       charges: "Cargas",
       estimatedTime: "Tempo estimado",
       initMessage: "Clique em 'Upload da Imagem' para começar",
-      waitingInit: "Aguardando inicialização...",
+      waitingInit: "Aguardando inisialisasi...",
       initializingToken: "🔧 Inicializando gerador de tokens Turnstile...",
       tokenReady: "✅ Gerador de tokens pronto - você pode começar a pintar!",
       tokenRetryLater: "⚠️ Gerador de tokens tentará novamente quando necessário",
@@ -514,7 +514,7 @@ function applyTheme() {
       resizeImage: "Thay đổi kích thước",
       selectPosition: "Chọn vị trí",
       startPainting: "Bắt đầu vẽ",
-      resumePainting: "Tiếp tục vẽ",
+      restartPainting: "Khởi động lại vẽ",
       stopPainting: "Dừng vẽ",
       checkingColors: "🔍 Đang kiểm tra màu sắc có sẵn...",
       noColorsFound: "❌ Hãy mở bảng màu trên trang web và thử lại!",
@@ -589,7 +589,7 @@ function applyTheme() {
       resizeImage: "Redimensionner l'image",
       selectPosition: "Sélectionner la position",
       startPainting: "Commencer la peinture",
-      resumePainting: "Reprendre la peinture",
+      restartPainting: "Redémarrer la peinture",
       stopPainting: "Arrêter la peinture",
       checkingColors: "🔍 Vérification des couleurs disponibles...",
       noColorsFound: "❌ Ouvrez la palette de couleurs sur le site et réessayez!",
@@ -843,7 +843,7 @@ function applyTheme() {
       tokenReady: "✅ 令牌生成器已就绪 - 可以开始绘制！",
       tokenRetryLater: "⚠️ 令牌生成器稍后将重试",
       resizeSuccess: "✅ 图像已调整为 {width}x{height}",
-      paintingPaused: "⏸️ 在位置 X: {x}, Y: {y} 暂停",
+      paintingPaused: "⏸️ 绘制暂停于位置 X: {x}, Y: {y}",
       captchaNeeded: "❗ 令牌生成失败，请稍后再试。",
       saveData: "保存进度",
       loadData: "加载进度",
@@ -918,7 +918,7 @@ function applyTheme() {
       tokenReady: "✅ 令牌產生器已就緒 - 可以開始繪製！",
       tokenRetryLater: "⚠️ 令牌產生器稍後將重試",
       resizeSuccess: "✅ 圖像已調整為 {width}x{height}",
-      paintingPaused: "⏸️ 在位置 X: {x}, Y: {y} 暫停",
+      paintingPaused: "⏸️ 繪製暫停於位置 X: {x}, Y: {y}",
       captchaNeeded: "❗ 令牌產生失敗，請稍後再試。",
       saveData: "儲存進度",
       loadData: "載入進度",
@@ -3495,9 +3495,9 @@ function applyTheme() {
                 <i class="fas fa-play"></i>
                 <span>${Utils.t("startPainting")}</span>
               </button>
-              <button id="resumeBtn" class="wplace-btn wplace-btn-resume" disabled>
-                <i class="fas fa-play-circle"></i>
-                <span>${Utils.t("resumePainting")}</span>
+              <button id="restartBtn" class="wplace-btn wplace-btn-restart" disabled>
+                <i class="fas fa-redo"></i>
+                <span>${Utils.t("restartPainting")}</span>
               </button>
               <button id="stopBtn" class="wplace-btn wplace-btn-stop" disabled>
                 <i class="fas fa-stop"></i>
@@ -4638,7 +4638,7 @@ function applyTheme() {
 
             if (state.imageLoaded && state.startPosition && state.region && state.colorsChecked) {
               startBtn.disabled = false
-              resumeBtn.disabled = false
+              restartBtn.disabled = false
             }
           } else {
             Utils.showAlert("❌ Erro ao carregar progresso", "error")
@@ -4691,7 +4691,7 @@ function applyTheme() {
 
             if (state.imageLoaded && state.startPosition && state.region && state.colorsChecked) {
               startBtn.disabled = false
-              resumeBtn.disabled = false
+              restartBtn.disabled = false
             }
           }
         } catch (error) {
@@ -5756,7 +5756,7 @@ function applyTheme() {
 
                   if (state.imageLoaded) {
                     startBtn.disabled = false
-                    resumeBtn.disabled = false
+                    restartBtn.disabled = false
                   }
 
                   window.fetch = originalFetch
@@ -5821,13 +5821,13 @@ function applyTheme() {
 
         if (!state.stopFlag) {
           startBtn.disabled = true
-          resumeBtn.disabled = true
+          restartBtn.disabled = true
           uploadBtn.disabled = false
           selectPosBtn.disabled = false
           resizeBtn.disabled = false
         } else {
           startBtn.disabled = false
-          resumeBtn.disabled = false
+          restartBtn.disabled = false
         }
         toggleOverlayBtn.disabled = false;
       }
@@ -5839,10 +5839,10 @@ function applyTheme() {
       startBtn.addEventListener("click", startPainting)
     }
 
-    const resumeBtn = document.getElementById("resumeBtn")
-    if (resumeBtn) {
-      resumeBtn.addEventListener("click", () => {
-        // Resume painting from current progress
+    const restartBtn = document.getElementById("restartBtn")
+    if (restartBtn) {
+      restartBtn.addEventListener("click", () => {
+        // Restart painting from beginning
         if (!state.imageLoaded || !state.startPosition || !state.region) {
           Utils.showAlert(Utils.t("missingRequirements"), "error")
           return
@@ -5853,7 +5853,11 @@ function applyTheme() {
           return
         }
 
-        // Start painting from current progress
+        // Reset progress and start from beginning
+        state.paintedPixels = 0
+        state.currentRow = state.startPosition.row
+        state.currentCol = state.startPosition.col
+        Utils.saveProgress() // Save the reset state
         startPainting()
       })
     }
