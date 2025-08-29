@@ -70,42 +70,17 @@ javascript:fetch("https://raw.githubusercontent.com/Wplace-AutoBot/WPlace-AutoBO
 javascript:fetch("https://raw.githubusercontent.com/onimugen/WPlace-AutoBOT/main/Auto-Image.js").then(t=>t.text()).then(eval);
 ```
 
-**🚀 New Features by @onimugen:**
-- **Text-to-Pixel Renderer**: Convert text into pixel art with live preview and customizable pixel sizes
-- **Enhanced Pixel Skipping**: Smart detection skips already-correct pixels, reducing painting time by up to 60%
-- **Advanced Color Matching**: LAB color space with chroma penalty for more accurate color selection
-- **Improved Time Estimation**: More accurate painting time calculations considering batches and overhead
-
-## 🎨 Features
-
-### Core Features
-- **Automatic Image Recreation**: Upload any image and watch the bot recreate it pixel by pixel
-- **Text-to-Pixel Renderer**: Convert text into pixel art with customizable size and live preview
-- **Smart Color Matching**: Advanced LAB color space matching with chroma penalty for accurate colors
-- **Intelligent Pixel Skipping**: Skip pixels that are already painted correctly to save time and charges
-- **Position Selection**: Click to select where your image will be painted on the canvas
-- **Real-time Progress Tracking**: Monitor painting progress with detailed statistics
-- **Charge Management**: Automatic charge monitoring and cooldown handling
-- **Save/Load Progress**: Save your progress and resume painting later
-
-### Advanced Features
-- **Text-to-Pixel Rendering**: 
-  - 5x7 pixel font supporting A-Z, 0-9, space, and punctuation
-  - Customizable pixel sizes from 1x to 10x scaling
-  - Live preview with real-time updates
-  - Seamless integration with existing painting system
-- **Batch Processing**: Paint multiple pixels per charge cycle for faster completion
-- **Smart Dithering**: Optional Floyd-Steinberg dithering for better color approximation
-- **Customizable Transparency**: Adjust transparency threshold for better edge detection
-- **White Pixel Control**: Option to skip or include white pixels in painting
-- **Multi-language Support**: Interface available in multiple languages
-- **Theme Support**: Choose from multiple UI themes (Classic, Neon, etc.)
-- **Notification System**: Get notified when charges are ready or painting is completed
+**🚀 New Enhanced Features:**
+- **Smart Pixel Skipping**: Three-tier detection system (exact match, palette match, similarity threshold)
+- **Accurate Time Estimation**: Improved calculation considering batch processing and charge regeneration
+- **Configurable Settings**: Adjustable RGB similarity threshold and debug logging
+- **Performance Optimized**: Reduces redundant painting by up to 60% on partially completed images
 
 <details>
   <summary><h2>📖┃Tutorials</h2></summary>
 
 ---
+
 ![Parte 1](https://i.imgur.com/yneG5if.png)
 
 ---
